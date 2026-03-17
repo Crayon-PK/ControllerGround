@@ -46,4 +46,4 @@ Thumbs.db
 *.ept
 *.eide-template
 
-/.pack/
+.pack/
