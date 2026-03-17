@@ -2,7 +2,7 @@ version: "4.1"
 name: CTG-F407
 type: ARM
 deviceName: null
-packDir: null
+packDir: .pack/Keil/STM32F4xx_DFP.2.15.0
 srcDirs: []
 virtualFolder:
   name: <virtual_root>
@@ -75,6 +75,7 @@ targets:
         - USE_HAL_DRIVER
         - STM32F407xx
       incList:
+        - .
         - Core/Inc
         - Drivers/STM32F4xx_HAL_Driver/Inc
         - Drivers/STM32F4xx_HAL_Driver/Inc/Legacy
@@ -200,4 +201,14 @@ targets:
         otherCmds: ""
         proType: 1
         speed: 8000
-    uploader: JLink
+      STLink:
+        address: "0x8000000"
+        bin: ""
+        elFile: None
+        optionBytes: .eide/ctg-f407.st.option.bytes.ini
+        otherCmds: ""
+        proType: SWD
+        resetMode: default
+        runAfterProgram: true
+        speed: 4000
+    uploader: STLink

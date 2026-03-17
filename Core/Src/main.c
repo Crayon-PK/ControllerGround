@@ -89,7 +89,8 @@ int main(void)
   MX_GPIO_Init();
   MX_FSMC_Init();
   /* USER CODE BEGIN 2 */
-                      
+  lcd_init();                                                    // 初始化屏幕
+  lcd_show_string(10, 10, 200, 16, 16, "Hello !", RED);       // 显示字符                   
   /* USER CODE END 2 */
 
   /* Infinite loop */

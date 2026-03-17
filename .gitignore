@@ -1,6 +1,4 @@
-# =========================
 # Keil MDK-ARM 编译生成文件
-# =========================
 *.o
 *.d
 *.crf
@@ -32,10 +30,7 @@ MDK-ARM/CTG-F407/
 .DS_Store
 Thumbs.db
 
-# =========================
 # EIDE 编译与配置生成文件
-# =========================
-# dot files
 /.vscode/launch.json
 /.settings
 /.eide/log
@@ -50,3 +45,5 @@ Thumbs.db
 # eide template
 *.ept
 *.eide-template
+
+/.pack/
