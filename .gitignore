@@ -1,0 +1,32 @@
+# Keil MDK-ARM 编译生成文件
+*.o
+*.d
+*.crf
+*.lnp
+*.axf
+*.htm
+*.build_log.htm
+*.dep
+*.map
+*.lst
+*.bak
+
+# Keil 用户本地配置与调试文件
+*.uvoptx
+*.uvgui.*
+*.uvguix.*
+*.scvd
+JLinkLog.txt
+MDK-ARM/DebugConfig/
+
+# 编译输出目录
+MDK-ARM/CTG-F407/
+
+# 可选忽略二进制固件
+*.hex
+*.bin
+
+# 操作系统与通用编辑器缓存
+.vscode/
+.DS_Store
+Thumbs.db
