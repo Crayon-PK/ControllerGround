@@ -3,7 +3,12 @@ name: CTG-F407
 type: ARM
 deviceName: null
 packDir: .pack/Keil/STM32F4xx_DFP.2.15.0
-srcDirs: []
+srcDirs:
+  - Middlewares
+  - Core
+  - Drivers
+  - BSP
+  - APP
 virtualFolder:
   name: <virtual_root>
   files: []
@@ -26,44 +31,6 @@ virtualFolder:
                 - path: Core/Src/stm32f4xx_it.c
                 - path: Core/Src/stm32f4xx_hal_msp.c
               folders: []
-    - name: Drivers
-      files: []
-      folders:
-        - name: STM32F4xx_HAL_Driver
-          files:
-            - path: Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_ll_fsmc.c
-            - path: Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_nor.c
-            - path: Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_sram.c
-            - path: Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_nand.c
-            - path: Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_pccard.c
-            - path: Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_rcc.c
-            - path: Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_rcc_ex.c
-            - path: Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_flash.c
-            - path: Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_flash_ex.c
-            - path: Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_flash_ramfunc.c
-            - path: Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_gpio.c
-            - path: Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_dma_ex.c
-            - path: Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_dma.c
-            - path: Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_pwr.c
-            - path: Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_pwr_ex.c
-            - path: Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_cortex.c
-            - path: Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal.c
-            - path: Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_exti.c
-          folders: []
-        - name: CMSIS
-          files:
-            - path: Core/Src/system_stm32f4xx.c
-          folders: []
-    - name: BSP
-      files:
-        - path: BSP/LCD/lcd.c
-      folders: []
-    - name: APP
-      files: []
-      folders: []
-    - name: ::CMSIS
-      files: []
-      folders: []
 dependenceList: []
 outDir: build
 miscInfo:
@@ -85,8 +52,25 @@ targets:
         - BSP/LCD
         - .cmsis/include
         - MDK-ARM/RTE/_CTG-F407
+        - BSP/KEY
+        - BSP
+        - Middlewares/Third_Party/FreeRTOS/Source/include
+        - Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2
+        - Middlewares/Third_Party/FreeRTOS/Source/portable/RVDS/ARM_CM4F
       libList: []
-    excludeList: []
+    excludeList:
+      - Middlewares/Third_Party/FreeRTOS/Source/portable/MemMang/heap_1.c
+      - Middlewares/Third_Party/FreeRTOS/Source/portable/MemMang/heap_2.c
+      - Middlewares/Third_Party/FreeRTOS/Source/portable/MemMang/heap_3.c
+      - Middlewares/Third_Party/FreeRTOS/Source/portable/MemMang/heap_5.c
+      - <virtual_root>/BSP
+      - <virtual_root>/Drivers
+      - Drivers/CMSIS
+      - BSP/LCD/lcd_ex.c
+      - Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_msp_template.c
+      - Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_timebase_tim_template.c
+      - Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_timebase_rtc_wakeup_template.c
+      - Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_timebase_rtc_alarm_template.c
     toolchain: AC5
     toolchainConfigMap:
       AC5:
@@ -201,6 +185,11 @@ targets:
         otherCmds: ""
         proType: 1
         speed: 8000
+      OpenOCD:
+        baseAddr: "0x08000000"
+        bin: ""
+        interface: stlink
+        target: stm32f1x
       STLink:
         address: "0x8000000"
         bin: ""
