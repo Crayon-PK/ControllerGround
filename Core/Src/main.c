@@ -27,6 +27,7 @@
 #include "bsp.h"
 #include "app_main.h"
 #include "tim.h"
+#include "lvgl.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -189,6 +190,7 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
   if (htim->Instance == TIM1)
   {
     HAL_IncTick();
+    lv_tick_inc(1);
   }
   /* USER CODE BEGIN Callback 1 */
 

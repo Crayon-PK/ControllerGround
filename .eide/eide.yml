@@ -7,8 +7,7 @@ srcDirs:
   - Middlewares
   - Core
   - Drivers
-  - BSP
-  - APP
+  - User
 virtualFolder:
   name: <virtual_root>
   files: []
@@ -41,6 +40,7 @@ targets:
       defineList:
         - USE_HAL_DRIVER
         - STM32F407xx
+        - LV_CONF_INCLUDE_SIMPLE
       incList:
         - .
         - Core/Inc
@@ -48,15 +48,18 @@ targets:
         - Drivers/STM32F4xx_HAL_Driver/Inc/Legacy
         - Drivers/CMSIS/Device/ST/STM32F4xx/Include
         - Drivers/CMSIS/Include
-        - APP
-        - BSP/LCD
         - .cmsis/include
         - MDK-ARM/RTE/_CTG-F407
-        - BSP/KEY
-        - BSP
         - Middlewares/Third_Party/FreeRTOS/Source/include
         - Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2
         - Middlewares/Third_Party/FreeRTOS/Source/portable/RVDS/ARM_CM4F
+        - Middlewares/lvgl/src
+        - Middlewares/lvgl
+        - User/APP
+        - User/BSP
+        - User/BSP/KEY
+        - User/BSP/LCD
+        - User/LVGL_Port
       libList: []
     excludeList:
       - Middlewares/Third_Party/FreeRTOS/Source/portable/MemMang/heap_1.c
@@ -71,6 +74,7 @@ targets:
       - Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_timebase_tim_template.c
       - Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_timebase_rtc_wakeup_template.c
       - Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_timebase_rtc_alarm_template.c
+      - User/BSP/LCD/bsp_lcd_ex.c
     toolchain: AC5
     toolchainConfigMap:
       AC5:
