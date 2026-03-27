@@ -5,15 +5,18 @@
 #include "lvgl.h"
 #include "lv_port_disp.h"
 
+extern volatile uint8_t g_lvgl_init_done;
+
 void TaskUI_Entry(void *argument)
 {
     // 1. 初始化 LVGL 核心与显示接口
     lv_init();
     lv_port_disp_init();
 
+	g_lvgl_init_done = 1;
     // 2. 创建一个简单的 LVGL 标签用于测试
     lv_obj_t * label = lv_label_create(lv_scr_act());
-    lv_label_set_text(label, "LVGL Porting Test OK!");
+    lv_label_set_text(label, "LVGL Porting Test");
     lv_obj_center(label); // 将标签居中显示
 
     while (1)

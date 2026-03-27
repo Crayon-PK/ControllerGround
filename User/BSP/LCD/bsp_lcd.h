@@ -70,16 +70,6 @@ uint32_t lcd_read_point(uint16_t x, uint16_t y);
 void lcd_draw_point(uint16_t x, uint16_t y, uint32_t color);
 void lcd_fill(uint16_t sx, uint16_t sy, uint16_t ex, uint16_t ey, uint32_t color);
 void lcd_color_fill(uint16_t sx, uint16_t sy, uint16_t ex, uint16_t ey, uint16_t *color);
-void lcd_draw_line(uint16_t x1, uint16_t y1, uint16_t x2, uint16_t y2, uint16_t color);
-void lcd_draw_hline(uint16_t x, uint16_t y, uint16_t len, uint16_t color);
-void lcd_draw_rectangle(uint16_t x1, uint16_t y1, uint16_t x2, uint16_t y2, uint16_t color);
-void lcd_draw_circle(uint16_t x0, uint16_t y0, uint8_t r, uint16_t color);
-void lcd_fill_circle(uint16_t x, uint16_t y, uint16_t r, uint16_t color);
-void lcd_show_char(uint16_t x, uint16_t y, char chr, uint8_t size, uint8_t mode, uint16_t color);
-void lcd_show_num(uint16_t x, uint16_t y, uint32_t num, uint8_t len, uint8_t size, uint16_t color);
-void lcd_show_xnum(uint16_t x, uint16_t y, uint32_t num, uint8_t len, uint8_t size, uint8_t mode, uint16_t color);
-void lcd_show_string(uint16_t x, uint16_t y, uint16_t width, uint16_t height, uint8_t size, char *p, uint16_t color);
-void lcd_ssd_backlight_set(uint8_t pwm);
 void lcd_display_dir(uint8_t dir);
 void lcd_set_window(uint16_t sx, uint16_t sy, uint16_t width, uint16_t height);
 

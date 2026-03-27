@@ -12,7 +12,7 @@ osThreadId_t TaskCtrl_Handler;
 // 任务属性定义
 const osThreadAttr_t TaskUI_attributes = {
   .name = "Task_UI",
-  .stack_size = 256 * 4,
+  .stack_size = 2048 * 4,
   .priority = (osPriority_t) osPriorityNormal,
 };
 

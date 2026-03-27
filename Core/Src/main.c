@@ -48,7 +48,7 @@
 /* Private variables ---------------------------------------------------------*/
 
 /* USER CODE BEGIN PV */
-
+volatile uint8_t g_lvgl_init_done = 0;
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -190,7 +190,10 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
   if (htim->Instance == TIM1)
   {
     HAL_IncTick();
-    lv_tick_inc(1);
+    if (g_lvgl_init_done != 0)
+    {
+        lv_tick_inc(1);
+    }
   }
   /* USER CODE BEGIN Callback 1 */
 

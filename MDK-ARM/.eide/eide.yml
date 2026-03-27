@@ -91,7 +91,8 @@ virtualFolder:
       folders: []
 dependenceList: []
 outDir: build
-miscInfo: {}
+miscInfo:
+  uid: 2b7dce74e6fc4e03b324344fff557dec
 targets:
   CTG-F407:
     cppPreprocessAttrs:
