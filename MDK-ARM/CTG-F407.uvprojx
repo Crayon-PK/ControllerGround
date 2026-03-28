@@ -339,7 +339,7 @@
               <MiscControls></MiscControls>
               <Define>USE_HAL_DRIVER,STM32F407xx,LV_CONF_INCLUDE_SIMPLE</Define>
               <Undefine></Undefine>
-              <IncludePath>../Core/Inc;../Drivers/STM32F4xx_HAL_Driver/Inc;../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy;../Drivers/CMSIS/Device/ST/STM32F4xx/Include;../Drivers/CMSIS/Include;../Middlewares/Third_Party/FreeRTOS/Source/include;../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2;../Middlewares/Third_Party/FreeRTOS/Source/portable/RVDS/ARM_CM4F;..\Middlewares\lvgl;..\Middlewares\lvgl\src;..\User\APP;..\User\BSP;..\User\BSP\LCD;..\User\BSP\KEY;..\User\LVGL_Port</IncludePath>
+              <IncludePath>../Core/Inc;../Drivers/STM32F4xx_HAL_Driver/Inc;../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy;../Drivers/CMSIS/Device/ST/STM32F4xx/Include;../Drivers/CMSIS/Include;../Middlewares/Third_Party/FreeRTOS/Source/include;../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2;../Middlewares/Third_Party/FreeRTOS/Source/portable/RVDS/ARM_CM4F;..\Middlewares\lvgl;..\Middlewares\lvgl\src;..\User\APP;..\User\BSP;..\User\BSP\LCD;..\User\BSP\KEY;..\User\BSP\TOUCH;..\User\LVGL_Port</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -2301,6 +2301,16 @@
               <FileType>1</FileType>
               <FilePath>..\User\BSP\KEY\bsp_key.c</FilePath>
             </File>
+            <File>
+              <FileName>bsp_touch_gtxx.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\User\BSP\TOUCH\bsp_touch_gtxx.c</FilePath>
+            </File>
+            <File>
+              <FileName>bsp_touch_iic.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\User\BSP\TOUCH\bsp_touch_iic.c</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
@@ -2332,9 +2342,9 @@
               <FilePath>..\User\LVGL_Port\lv_port_disp.c</FilePath>
             </File>
             <File>
-              <FileName>lv_port_fs.c</FileName>
+              <FileName>lv_port_indev.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\User\LVGL_Port\lv_port_fs.c</FilePath>
+              <FilePath>..\User\LVGL_Port\lv_port_indev.c</FilePath>
             </File>
           </Files>
         </Group>

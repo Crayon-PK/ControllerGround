@@ -60,6 +60,7 @@ targets:
         - User/BSP/KEY
         - User/BSP/LCD
         - User/LVGL_Port
+        - User/BSP/TOUCH
       libList: []
     excludeList:
       - Middlewares/Third_Party/FreeRTOS/Source/portable/MemMang/heap_1.c
