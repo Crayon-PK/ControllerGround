@@ -19,6 +19,9 @@
 /* Includes ------------------------------------------------------------------*/
 #include "main.h"
 #include "cmsis_os.h"
+#include "dma.h"
+#include "tim.h"
+#include "usart.h"
 #include "gpio.h"
 #include "fsmc.h"
 
@@ -92,8 +95,10 @@ int main(void)
 
   /* Initialize all configured peripherals */
   MX_GPIO_Init();
+  MX_DMA_Init();
   MX_FSMC_Init();
   MX_TIM2_Init();
+  MX_USART3_UART_Init();
   /* USER CODE BEGIN 2 */
   HAL_TIM_Base_Start(&htim2);
   bsp_init();
@@ -190,10 +195,6 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
   if (htim->Instance == TIM1)
   {
     HAL_IncTick();
-    if (g_lvgl_init_done != 0)
-    {
-        lv_tick_inc(1);
-    }
   }
   /* USER CODE BEGIN Callback 1 */
 

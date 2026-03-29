@@ -1,6 +1,7 @@
 #include "app_main.h"
 #include "task_ui.h"
 #include "task_ctrl.h"
+#include "task_uart.h"
 
 // 定义消息队列句柄
 osMessageQueueId_t KeyQueue;
@@ -8,6 +9,7 @@ osMessageQueueId_t KeyQueue;
 // 任务句柄定义
 osThreadId_t TaskUI_Handler;
 osThreadId_t TaskCtrl_Handler;
+osThreadId_t TaskUART_Handler;
 
 // 任务属性定义
 const osThreadAttr_t TaskUI_attributes = {
@@ -20,6 +22,12 @@ const osThreadAttr_t TaskCtrl_attributes = {
   .name = "Task_Ctrl",
   .stack_size = 128 * 4, 
   .priority = (osPriority_t) osPriorityAboveNormal,
+};
+
+const osThreadAttr_t TaskUART_attributes = {
+  .name = "Task_UART",
+  .stack_size = 512 * 4,
+  .priority = (osPriority_t) osPriorityNormal,
 };
 
 void App_TaskCreate(void)
@@ -37,5 +45,7 @@ void App_TaskCreate(void)
     // 3. 创建按键扫描任务
     TaskCtrl_Handler = osThreadNew((osThreadFunc_t)TaskCtrl_Entry, NULL, &TaskCtrl_attributes);
 
+	TaskUART_Handler = osThreadNew((osThreadFunc_t)TaskUART_Entry, NULL, &TaskUART_attributes);
+	
     osThreadExit();
 }
