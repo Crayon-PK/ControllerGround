@@ -22,13 +22,12 @@
 #include "stm32f4xx_it.h"
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
-#include "cmsis_os2.h"
+#include "cmsis_os.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
 /* USER CODE BEGIN TD */
-extern UART_HandleTypeDef huart3;
-extern osThreadId_t TaskUART_Handler;
+
 /* USER CODE END TD */
 
 /* Private define ------------------------------------------------------------*/
@@ -43,7 +42,7 @@ extern osThreadId_t TaskUART_Handler;
 
 /* Private variables ---------------------------------------------------------*/
 /* USER CODE BEGIN PV */
-
+extern osThreadId_t TaskTelemetry_Handler;
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -60,7 +59,7 @@ extern osThreadId_t TaskUART_Handler;
 extern DMA_HandleTypeDef hdma_usart3_rx;
 extern DMA_HandleTypeDef hdma_usart3_tx;
 extern UART_HandleTypeDef huart3;
-extern TIM_HandleTypeDef htim1;
+extern TIM_HandleTypeDef htim6;
 
 /* USER CODE BEGIN EV */
 
@@ -193,39 +192,39 @@ void DMA1_Stream3_IRQHandler(void)
 }
 
 /**
-  * @brief This function handles TIM1 update interrupt and TIM10 global interrupt.
-  */
-void TIM1_UP_TIM10_IRQHandler(void)
-{
-  /* USER CODE BEGIN TIM1_UP_TIM10_IRQn 0 */
-
-  /* USER CODE END TIM1_UP_TIM10_IRQn 0 */
-  HAL_TIM_IRQHandler(&htim1);
-  /* USER CODE BEGIN TIM1_UP_TIM10_IRQn 1 */
-
-  /* USER CODE END TIM1_UP_TIM10_IRQn 1 */
-}
-
-/**
   * @brief This function handles USART3 global interrupt.
   */
 void USART3_IRQHandler(void)
 {
   /* USER CODE BEGIN USART3_IRQn 0 */
-
+  if(__HAL_UART_GET_FLAG(&huart3, UART_FLAG_IDLE) != RESET)
+  {
+      __HAL_UART_CLEAR_IDLEFLAG(&huart3);
+      
+      /* 唤醒解析任务 (向其发送线程标志位 0x01) */
+      if(TaskTelemetry_Handler != NULL) {
+          osThreadFlagsSet(TaskTelemetry_Handler, 0x01);
+      }
+  }
   /* USER CODE END USART3_IRQn 0 */
   HAL_UART_IRQHandler(&huart3);
   /* USER CODE BEGIN USART3_IRQn 1 */
-  if (__HAL_UART_GET_FLAG(&huart3, UART_FLAG_IDLE)) 
-  {
-	  __HAL_UART_CLEAR_IDLEFLAG(&huart3); // 必须手动清除标志位，否则会死循环进入中断
-	  
-	  // 发送任务通知 (Flag 0x01)，唤醒 TaskUART_Entry
-	  if (TaskUART_Handler != NULL) {
-		  osThreadFlagsSet(TaskUART_Handler, 0x01);
-	  }
-  }
+
   /* USER CODE END USART3_IRQn 1 */
+}
+
+/**
+  * @brief This function handles TIM6 global interrupt, DAC1 and DAC2 underrun error interrupts.
+  */
+void TIM6_DAC_IRQHandler(void)
+{
+  /* USER CODE BEGIN TIM6_DAC_IRQn 0 */
+
+  /* USER CODE END TIM6_DAC_IRQn 0 */
+  HAL_TIM_IRQHandler(&htim6);
+  /* USER CODE BEGIN TIM6_DAC_IRQn 1 */
+
+  /* USER CODE END TIM6_DAC_IRQn 1 */
 }
 
 /* USER CODE BEGIN 1 */

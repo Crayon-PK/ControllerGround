@@ -81,7 +81,7 @@
           </BeforeMake>
           <AfterMake>
             <RunUserProg1>0</RunUserProg1>
-            <RunUserProg2>0</RunUserProg2>
+            <RunUserProg2>1</RunUserProg2>
             <UserProg1Name></UserProg1Name>
             <UserProg2Name></UserProg2Name>
             <UserProg1Dos16Mode>0</UserProg1Dos16Mode>
@@ -336,10 +336,10 @@
             <v6WtE>0</v6WtE>
             <v6Rtti>0</v6Rtti>
             <VariousControls>
-              <MiscControls></MiscControls>
+              <MiscControls>--gnu --diag_suppress=66</MiscControls>
               <Define>USE_HAL_DRIVER,STM32F407xx,LV_CONF_INCLUDE_SIMPLE</Define>
               <Undefine></Undefine>
-              <IncludePath>../Core/Inc;../Drivers/STM32F4xx_HAL_Driver/Inc;../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy;../Drivers/CMSIS/Device/ST/STM32F4xx/Include;../Drivers/CMSIS/Include;../Middlewares/Third_Party/FreeRTOS/Source/include;../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2;../Middlewares/Third_Party/FreeRTOS/Source/portable/RVDS/ARM_CM4F;../Middlewares/lvgl;../Middlewares/lvgl/src;../User/APP;../User/BSP;../User/BSP/LCD;../User/BSP/KEY;../User/BSP/TOUCH;../User/LVGL_Port</IncludePath>
+              <IncludePath>../Core/Inc;../Drivers/STM32F4xx_HAL_Driver/Inc;../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy;../Drivers/CMSIS/Device/ST/STM32F4xx/Include;../Drivers/CMSIS/Include;../Middlewares/Third_Party/FreeRTOS/Source/include;../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2;../Middlewares/Third_Party/FreeRTOS/Source/portable/RVDS/ARM_CM4F;../Middlewares/lvgl;../Middlewares/lvgl/src;../User/APP;../User/BSP;../User/BSP/LCD;../User/BSP/KEY;../User/BSP/TOUCH;..\User\BSP\USART;../User/LVGL_Port;..\User\Broker;..\User\Protocol;../User/Protocol/mavlink_lib</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -2479,6 +2479,11 @@
               <FileType>1</FileType>
               <FilePath>..\User\BSP\TOUCH\bsp_touch_iic.c</FilePath>
             </File>
+            <File>
+              <FileName>bsp_telemetry.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\User\BSP\USART\bsp_telemetry.c</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
@@ -2500,9 +2505,9 @@
               <FilePath>..\User\APP\task_ui.c</FilePath>
             </File>
             <File>
-              <FileName>task_uart.c</FileName>
+              <FileName>task_telemetry.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\User\APP\task_uart.c</FilePath>
+              <FilePath>..\User\APP\task_telemetry.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -2518,6 +2523,36 @@
               <FileName>lv_port_indev.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\User\LVGL_Port\lv_port_indev.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>User/Protocal</GroupName>
+          <Files>
+            <File>
+              <FileName>telemetry_parse.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\User\Protocol\telemetry_parse.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>User/Broker</GroupName>
+          <Files>
+            <File>
+              <FileName>data_broker.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\User\Broker\data_broker.c</FilePath>
+            </File>
+            <File>
+              <FileName>data_broker.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\User\Broker\data_broker.h</FilePath>
+            </File>
+            <File>
+              <FileName>data_model.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\User\Broker\data_model.h</FilePath>
             </File>
           </Files>
         </Group>

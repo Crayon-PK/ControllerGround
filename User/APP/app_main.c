@@ -1,7 +1,8 @@
 #include "app_main.h"
 #include "task_ui.h"
 #include "task_ctrl.h"
-#include "task_uart.h"
+#include "task_telemetry.h"
+#include "data_broker.h"
 
 // 定义消息队列句柄
 osMessageQueueId_t KeyQueue;
@@ -9,7 +10,7 @@ osMessageQueueId_t KeyQueue;
 // 任务句柄定义
 osThreadId_t TaskUI_Handler;
 osThreadId_t TaskCtrl_Handler;
-osThreadId_t TaskUART_Handler;
+osThreadId_t TaskTelemetry_Handler; // 新增句柄
 
 // 任务属性定义
 const osThreadAttr_t TaskUI_attributes = {
@@ -24,28 +25,24 @@ const osThreadAttr_t TaskCtrl_attributes = {
   .priority = (osPriority_t) osPriorityAboveNormal,
 };
 
-const osThreadAttr_t TaskUART_attributes = {
-  .name = "Task_UART",
-  .stack_size = 512 * 4,
-  .priority = (osPriority_t) osPriorityNormal,
+const osThreadAttr_t TaskTelemetry_attributes = {
+  .name = "Task_Tele",
+  .stack_size = 1024 * 4, // MAVLink 解析需要一定栈空间
+  .priority = (osPriority_t) osPriorityHigh, // 解析任务优先级要高
 };
 
 void App_TaskCreate(void)
 {
-    // 1. 创建消息队列，长度为 10，每个消息大小为 1 字节
+    // 0. 初始化数据中间件 (必须在任务启动前)
+    Broker_Init();
+
+    // 1. 创建消息队列
     KeyQueue = osMessageQueueNew(10, sizeof(uint8_t), NULL);
-    if (KeyQueue == NULL) {
-        // 队列创建失败处理
-        return;
-    }
 
-    // 2. 创建 LCD 显示任务
+    // 2. 创建各个任务
     TaskUI_Handler = osThreadNew((osThreadFunc_t)TaskUI_Entry, NULL, &TaskUI_attributes);
-
-    // 3. 创建按键扫描任务
     TaskCtrl_Handler = osThreadNew((osThreadFunc_t)TaskCtrl_Entry, NULL, &TaskCtrl_attributes);
-
-	TaskUART_Handler = osThreadNew((osThreadFunc_t)TaskUART_Entry, NULL, &TaskUART_attributes);
+    TaskTelemetry_Handler = osThreadNew((osThreadFunc_t)TaskTelemetry_Entry, NULL, &TaskTelemetry_attributes); // 创建数传任务
 	
     osThreadExit();
 }

@@ -1,49 +1,41 @@
 #include "task_ui.h"
 #include "app_main.h"
-#include "bsp_lcd.h"
-#include "cmsis_os.h"
 #include "lvgl.h"
 #include "lv_port_disp.h"
-#include "lv_port_indev.h" // 引入输入设备接口
-
-extern volatile uint8_t g_lvgl_init_done;
-
-// 按钮点击事件回调函数
-static void btn_event_cb(lv_event_t * e)
-{
-    lv_event_code_t code = lv_event_get_code(e);
-    lv_obj_t * btn = lv_event_get_target(e);
-    
-    if(code == LV_EVENT_CLICKED) {
-        lv_obj_t * label = lv_obj_get_child(btn, 0);
-        lv_label_set_text(label, "Clicked!"); // 点击后改变文本
-    }
-}
+#include "lv_port_indev.h"
+#include "data_broker.h"  /* 引入 Broker */
 
 void TaskUI_Entry(void *argument)
 {
-    // 1. 初始化 LVGL 核心与显示接口
     lv_init();
     lv_port_disp_init();
-    
-    // 2. 初始化触摸输入设备接口
     lv_port_indev_init(); 
 
-	g_lvgl_init_done = 1;
+    /* 创建显示数据的 Label */
+    lv_obj_t * label_att = lv_label_create(lv_scr_act());
+    lv_obj_align(label_att, LV_ALIGN_CENTER, 0, -20);
+    lv_label_set_text(label_att, "Waiting for Telemetry...");
 
-    // 3. 创建一个按钮用于测试触摸
-    lv_obj_t * btn = lv_btn_create(lv_scr_act());
-    lv_obj_set_size(btn, 120, 50);
-    lv_obj_center(btn); // 居中显示
-    lv_obj_add_event_cb(btn, btn_event_cb, LV_EVENT_ALL, NULL); // 绑定事件
+    lv_obj_t * label_bat = lv_label_create(lv_scr_act());
+    lv_obj_align(label_bat, LV_ALIGN_CENTER, 0, 20);
+    lv_label_set_text(label_bat, "Battery: -- mV");
 
-    // 4. 在按钮上添加文本
-    lv_obj_t * label = lv_label_create(btn);
-    lv_label_set_text(label, "Touch Me");
-    lv_obj_center(label);
+    VehicleAttitude_t ui_att;
+    VehicleSysStatus_t ui_sys;
 
     while (1)
     {
+        /* 1. 订阅最新数据 */
+        Broker_Subscribe_Attitude(&ui_att);
+        Broker_Subscribe_Battery(&ui_sys);
+
+        /* 2. 更新 LVGL UI (注意：%f 打印在单片机上通常较消耗资源，且需要开启编译支持，这里转为整数显示进行安全测试) */
+        lv_label_set_text_fmt(label_att, "Roll:%d Pitch:%d Yaw:%d", 
+                              (int)ui_att.roll, (int)ui_att.pitch, (int)ui_att.yaw);
+                              
+        lv_label_set_text_fmt(label_bat, "Battery: %d mV", ui_sys.battery_mv);
+
+        /* 3. 运行 LVGL 核心 */
         lv_timer_handler();
         osDelay(5); 
     }
